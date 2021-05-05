@@ -1,38 +1,29 @@
-import React, { Component } from 'react'
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import React from "react";
+import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem, CardBody, CardText } from "reactstrap";
+import { Link } from 'react-router-dom';
 
-export class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-
-       this.state = {
-           selectedDish: null
-       }
-    }
-
-    onDishSelect(dish) {
-        this.setState({ selectedDish: dish});
-
-    }
-
-    renderDish(dish) {
+    function RenderDish({dish}) {
         if (dish != null) {
-            return(
-                <div className="col-12 col-md-5 m-1">
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-
-                </Card>
-                </div>
+            return (
+                <div className='col-12 col-md-5 m-1'>
+                    <Card>
+                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardBody>
+                            <CardTitle> {dish.name}</CardTitle>
+                            <CardText> {dish.description} </CardText>
+                        </CardBody>
+                    </Card>
+                </div>   
+            );
+        }
+        else {
+            return (
+                <div></div>
             );
         }
     }
 
-    renderComments(comments){
+    function RenderComments({comments}){
         if (comments == null) {
             return (<div></div>)
         }
@@ -62,25 +53,43 @@ export class DishDetail extends Component {
         )
     }
 
-    render() {
-        const dish = this.props.dish
 
-        if (dish==null) {
-            return(<div></div>)
+    const DishDetail = (props) => {
+
+        const dish = props.dish
+        
+    
+        if (dish == null) {
+            return (<div></div>);
         }
 
-        const dishItem = this.renderDish(dish)
-        const dishComment = this.renderComments(dish.comments);
         return (
-            <div class="container">
+            <div className="container">
                 <div className="row">
-                    {dishItem}
-                    {dishComment}
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link to="/menu">Menu</Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active>
+                            { props.dish.name }
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+
+                    <div className="col-12">
+                        <h3> {props.dish.menu}</h3>
+                        <hr />
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <RenderDish dish={ props.dish } />
+                    <RenderComments comments={ props.comments } />
                 </div>
             </div>
-        );
+        )
     }
-}
 
-export default DishDetail
+
+
+export default DishDetail;
 
