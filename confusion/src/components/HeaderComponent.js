@@ -104,7 +104,7 @@ class Header extends Component{
                                 <p> 
                                     We take inspiration from te World's best cuisines, and create a unique 
                                     fusion experience. Our lipsmacking creations 
-                                    will tickle your culinary senses!
+                                    will ti ckle your culinary senses!
                                 </p>
                             </div>
                         </div>
